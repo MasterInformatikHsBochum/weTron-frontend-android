@@ -80,8 +80,7 @@ public class WebsocketClient extends WebSocketListener{
 
     public void init(){
         OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder().url("ws://5.45.108.170:8000/websocket/").build();
-        //Request request = new Request.Builder().url("wss://wetron.tk:443/websocket/").build();
+        Request request = new Request.Builder().url("wss://wetron.tk/websocket/").build();
         ws = client.newWebSocket(request, this);
 
         client.dispatcher().executorService().shutdown();
