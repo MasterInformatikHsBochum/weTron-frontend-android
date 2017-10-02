@@ -8,7 +8,7 @@ import de.hs_bochum.wetroncontroller.protocol.request.ConnectRequestData
  * Created by Sebastian on 08.09.2017.
  */
 class ConnectRequest(
-        playerId:Int,
         gameId:Int,
+        playerId:Int,
         @SerializedName("v")var Value: ConnectRequestData
 ) : Message(0, gameId, playerId, 'c')

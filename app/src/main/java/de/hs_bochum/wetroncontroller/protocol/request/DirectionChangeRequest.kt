@@ -10,5 +10,5 @@ class DirectionChangeRequest(
         playerId:Int,
         gameId:Int,
         @SerializedName("v")var value: DirectionChangeRequestData)
-    :Message(11, gameId, playerId, 'c')
+    :Message(6, gameId, playerId, 'c')
 

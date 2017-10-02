@@ -3,6 +3,8 @@ package de.hs_bochum.wetron.wetroncontroller
 import android.app.ProgressDialog
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.os.Looper
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.Toast
@@ -15,31 +17,45 @@ import kotlinx.android.synthetic.main.activity_game.*
  * Created by Sebastian on 08.09.2017.
  */
 class GameActivity:AppCompatActivity(), ProtocolHandler {
+    override fun onError(message: String) {
+        Toast.makeText(this, "Error: " + message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onClose() {
+        runOnUiThread{
+            Toast.makeText(this, "Connection closed", Toast.LENGTH_SHORT).show()
+        }
+        finish()
+    }
 
     var gameId:Int = 0
     var playerId = 0
     lateinit var client:WebsocketClient
+    lateinit var countDownDialog:AlertDialog
 
     override fun onConnectResponse(success: Boolean) {
         if(success){
-            progressMessage.setText("Warte auf andere Spieler...")
+            runOnUiThread {
+                progressMessage.setText("Warte auf andere Spieler...")
+            }
+
         }
     }
 
     override fun onCountdownStart(ms: Int) {
-        object : CountDownTimer(ms.toLong(), 1000) {
-
-            override fun onTick(millisUntilFinished: Long) {
-                progressMessage.setText("seconds remaining: " + millisUntilFinished / 1000)
-            }
-
-            override fun onFinish() {
+        runOnUiThread {
+            if(!countDownDialog.isShowing){
+                progressMessage.visibility = View.INVISIBLE
                 progressBar.visibility = View.INVISIBLE
+                countDownDialog.show()
+            }
+            countDownDialog.setTitle("Game starts in: " + (ms / 1000).toString())
+            if(ms == 0){
+                countDownDialog.dismiss()
                 btn_right.isEnabled = true
                 btn_left.isEnabled = true
             }
-        }.start()
-
+        }
     }
 
     override fun onGameOver(win: Boolean) {
@@ -55,12 +71,15 @@ class GameActivity:AppCompatActivity(), ProtocolHandler {
 
         setContentView(R.layout.activity_game)
 
-        btn_left.setOnClickListener(View.OnClickListener { client.sendDirectionChange(playerId, gameId, 0.75)})
-        btn_right.setOnClickListener(View.OnClickListener { client.sendDirectionChange(playerId, gameId, 0.25) })
+        btn_left.setOnClickListener(View.OnClickListener { client.sendDirectionChange(playerId, gameId, 90.0)})
+        btn_right.setOnClickListener(View.OnClickListener { client.sendDirectionChange(playerId, gameId, 270.0) })
 
         gameId  =intent.getIntExtra("GAME_CODE", -1)
         playerId = intent.getIntExtra("PLAYER_ID", -1)
         startConnection(gameId, playerId)
+
+        countDownDialog = AlertDialog.Builder(this).create()
+        countDownDialog.setTitle("Game Start in:")
     }
 
     private fun startConnection(code: Int, player: Int){

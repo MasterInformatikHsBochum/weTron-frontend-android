@@ -12,6 +12,7 @@ import de.hs_bochum.wetroncontroller.R
 import de.hs_bochum.wetroncontroller.model.QrCode
 import kotlinx.android.synthetic.main.activity_main.*
 
+
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

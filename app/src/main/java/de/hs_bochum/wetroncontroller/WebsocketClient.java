@@ -25,6 +25,7 @@ import okio.ByteString;
 public class WebsocketClient extends WebSocketListener{
 
     private static final int NORMAL_CLOSURE_STATUS = 1000;
+    private boolean countdownStarted = false;
     WebSocket ws;
     ProtocolHandler callback;
 
@@ -49,7 +50,7 @@ public class WebsocketClient extends WebSocketListener{
                 break;
             case 4:
                 CountdownResponse countdownResponse = gson.fromJson(text, CountdownResponse.class);
-                callback.onCountdownStart(countdownResponse.getValue().getMs());
+                    callback.onCountdownStart(countdownResponse.getValue().getMs());
                 break;
             case 5:
                 GameOverResponse gameOverResponse = gson.fromJson(text, GameOverResponse.class);
@@ -67,25 +68,27 @@ public class WebsocketClient extends WebSocketListener{
     @Override
     public void onClosing(WebSocket webSocket, int code, String reason) {
         webSocket.close(NORMAL_CLOSURE_STATUS, null);
+        callback.onClose();
         System.out.println("Closing: " + code + " " + reason);
     }
 
     @Override
     public void onFailure(WebSocket webSocket, Throwable t, Response response) {
+        callback.onError(t.getMessage());
         t.printStackTrace();
     }
 
     public void init(){
         OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder().url("ws://193.175.85.50:80").build();
+        Request request = new Request.Builder().url("ws://5.45.108.170:8000/websocket/").build();
+        //Request request = new Request.Builder().url("wss://wetron.tk:443/websocket/").build();
         ws = client.newWebSocket(request, this);
 
-        // Trigger shutdown of the dispatcher's executor so this process can
-        // exit cleanly.
         client.dispatcher().executorService().shutdown();
     }
 
     public void sendMessage(String message){
+        System.out.println("Sending: " + message);
         ws.send(message);
     }
 
