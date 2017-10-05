@@ -4,67 +4,73 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="de.hs_bochum.wetron.wetroncontroller.MainActivity">
+    android:background="@color/colorSecondaryBlack"
+    tools:context="de.hs_bochum.wetron.wetroncontroller.MainActivity"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="25dp">
 
-    <Button
+    <ImageView
+        android:id="@+id/iv_bg_1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/grid" />
+
+    <ImageView
+        android:id="@+id/iv_bg_2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/grid" />
+
+    <de.hs_bochum.wetroncontroller.ui.custom.WeTronButton
         android:id="@+id/btn_connect"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:text="Connect"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/til_gameid"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        app:layout_constraintBottom_toTopOf="@id/btn_connect"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/gradient"
+        android:padding="10dp"
+        android:text="JOIN GAME"
+        android:textColor="@color/colorPrimary"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="98dp">
+        app:layout_constraintTop_toBottomOf="@+id/weTronTextView" />
 
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/et_gameid"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="gameId"
-            android:inputType="number" />
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/til_playerid"
-        android:layout_width="match_parent"
+    <de.hs_bochum.wetroncontroller.ui.custom.WeTronButton
+        android:id="@+id/btn_about"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/til_gameid"
-        tools:layout_editor_absoluteY="0dp">
+        android:layout_marginTop="32dp"
+        android:background="@drawable/gradient"
+        android:padding="10dp"
+        android:text="About"
+        android:textColor="@color/colorPrimary"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="@+id/btn_connect"
+        app:layout_constraintStart_toStartOf="@+id/btn_connect"
+        app:layout_constraintTop_toBottomOf="@+id/btn_connect" />
 
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/et_playerid"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="playerId"
-            android:inputType="number" />
-    </android.support.design.widget.TextInputLayout>
-
-    <Button
-        android:id="@+id/btn_scan_qrcode"
+    <de.hs_bochum.wetroncontroller.ui.custom.WeTronTextView
+        android:id="@+id/weTronTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:text="Scan"
+        android:layout_marginTop="40dp"
+        android:text="WE TRON"
+        android:textColor="@color/colorPrimary"
+        android:textSize="56sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/til_playerid"
-        tools:layout_editor_absoluteY="292dp" />
+        app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>
